@@ -1,38 +1,108 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", sans-serif;
+}
+
 .App {
+  color: #4c3d3d;
+  background-color: #fff7d4;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.App__darkMode {
+  color: #fff7d4;
+  background-color: #4c3d3d;
+}
+
+.App__header {
+  height: 20%;
+  z-index: 1000;
   text-align: center;
+  width: 100%;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App__title {
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App__inputDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+  margin-top: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App__searchInput {
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  background-color: #ffd95a;
+  border-radius: 0.4rem;
+}
+
+.App__searchButton {
+  background-color: transparent;
+  border: none;
+  font-size: 1.3rem;
+}
+
+.App__moviesContainer {
+  display: grid;
+  /* grid-template-rows: repeat(2, minmax(1fr, 2fr)); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1em;
+  place-items: center;
+  width: 80%;
+  height: 70%;
+  margin: 0 auto;
+  border: 2px solid black;
+  overflow: scroll;
+}
+
+.App__moviesContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.App__movieCard {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 20em;
+  width: 20em;
+  border: 2px solid red;
+}
+
+.App__movieImage {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.App__movieDescription {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.App__movieName {
+  margin-bottom: 10px;
+}
+
+.App__movieOther {
+  font-weight: 200;
+}
+
+.App__footer {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
+  height: 10%;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.8rem;
 }
