@@ -5,16 +5,19 @@
   font-family: "Noto Sans", sans-serif;
 }
 
-.App {
-  color: #4c3d3d;
-  background-color: #fff7d4;
-  height: 100vh;
-  overflow: hidden;
+:root {
+  --color-dark: #1a120b;
+  --color-lessDark: #3c2a21;
+  --color-lessLight: #d5cea3;
+  --color-light: #e5e5cb;
 }
 
-.App__darkMode {
-  color: #fff7d4;
-  background-color: #4c3d3d;
+.App {
+  color: var(--color-dark);
+  background-color: var(--color-light);
+  height: 100vh;
+  overflow: hidden;
+  transition: all 0.5s ease;
 }
 
 .App__header {
@@ -23,6 +26,7 @@
   text-align: center;
   width: 100%;
   padding: 20px;
+  position: relative;
 }
 
 .App__title {
@@ -40,9 +44,9 @@
 
 .App__searchInput {
   padding: 5px 10px;
-  border: none;
+  border: inset;
   outline: none;
-  background-color: #ffd95a;
+  background-color: var(--color-lessLight);
   border-radius: 0.4rem;
 }
 
@@ -50,59 +54,183 @@
   background-color: transparent;
   border: none;
   font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .App__moviesContainer {
   display: grid;
-  /* grid-template-rows: repeat(2, minmax(1fr, 2fr)); */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1em;
+  gap: 2em;
   place-items: center;
   width: 80%;
   height: 70%;
   margin: 0 auto;
-  border: 2px solid black;
   overflow: scroll;
+  padding: 20px 0;
 }
 
 .App__moviesContainer::-webkit-scrollbar {
   display: none;
 }
 
+.App__moviesContainer2 {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .App__movieCard {
   display: flex;
   flex-direction: column;
-  height: 20em;
-  width: 20em;
-  border: 2px solid red;
+  width: 15em;
+  background-color: var(--color-lessDark);
+  color: var(--color-light);
+  border-radius: 1rem;
+  padding: 10px;
+  transition: all 0.3s ease;
 }
 
 .App__movieImage {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 10px;
+  margin: 0 auto;
 }
 
 .App__movieDescription {
-  margin: 10px;
+  text-align: center;
+  margin: 5px;
   display: flex;
   flex-direction: column;
 }
 
 .App__movieName {
-  margin-bottom: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
 }
 
-.App__movieOther {
+.App__movieType {
   font-weight: 200;
+}
+
+.App__movieYear {
+  margin-top: 10px;
+  border: 1px solid var(--color-light);
+  border-radius: 3rem;
+  font-weight: 900;
 }
 
 .App__footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.3rem;
   height: 10%;
   text-align: center;
   font-style: italic;
   font-size: 0.8rem;
+}
+
+.App__notFoundMessage {
+  font-size: 2rem;
+}
+
+.App__anchorTag {
+  margin: 0 5px;
+  padding: 5px;
+  border-radius: 0.5rem;
+  color: var(--color-lessLight);
+  background-color: var(--color-dark);
+}
+
+.App__anchorTag:hover {
+  color: var(--color-dark);
+  background-color: var(--color-lessLight);
+}
+
+.App__darkModeButton {
+  cursor: pointer;
+  position: absolute;
+  font-size: 2rem;
+  background-color: var(--color-lessLight);
+  border: 5px outset var(--color-lessDark);
+  border-radius: 50%;
+  padding: 5px;
+  top: 40%;
+  right: 5%;
+  transform: translate(-5%, -40%);
+  transition: all 0.5s ease;
+}
+
+.App__darkModeButton:hover {
+  background-color: var(--color-lessDark);
+  border: 5px outset var(--color-lessLight);
+  transform: translate(-5%, -50%);
+}
+
+.App__movieCard:hover {
+  transform: scale(0.95);
+  color: var(--color-dark);
+  background-color: var(--color-lessLight);
+}
+
+.darkMode {
+  color: var(--color-light);
+  background-color: var(--color-dark);
+}
+
+.darkMode__children {
+  color: var(--color-dark);
+  background-color: var(--color-light);
+}
+
+.darkMode__children:hover {
+  color: var(--color-light);
+  background-color: var(--color-lessDark);
+}
+
+@media screen and (max-width: 900px) {
+  .App__footer {
+    font-size: 0.6rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .App__footer {
+    font-size: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    margin-inline: 10px;
+  }
+
+  .App__darkModeButton {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .App__darkModeButton {
+    font-size: 1rem;
+    top: 30%;
+  }
+
+  .App__header {
+    padding: 0;
+    padding-top: 30px;
+  }
+
+  .App__title {
+    font-size: 1.8rem;
+  }
+
+  .App__searchInput {
+    padding: 1px 5px;
+  }
+
+  .App__movieCard {
+    width: 10rem;
+  }
 }

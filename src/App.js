@@ -1,108 +1,94 @@
+import { useEffect, useState } from "react";
 import "./App.css";
+import MovieCard from "./MovieCard";
+import Header from "./Header";
+import Footer from "./Footer";
 
 function App() {
+  const [searchInput, setSearchInput] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
+  const randomDefaultSearch = [
+    "Superman",
+    "Batman",
+    "Spiderman",
+    "Action",
+    "Hello",
+    "Scary",
+    "Funny",
+    "Avengers",
+    "Justice League",
+    "Mission",
+  ];
+
+  // Setting up the API
+  const API_KEY = "cc0d0b66";
+  const API_URL = `https://www.omdbapi.com?apikey=${API_KEY}`;
+
+  const searchMovies = async (movieTitle) => {
+    const response = await fetch(`${API_URL}&s=${movieTitle}`);
+
+    const data = await response.json();
+
+    setMovies(data.Search);
+  };
+
+  // Get movies once the page loads
+  useEffect(() => {
+    searchMovies(
+      randomDefaultSearch[
+        Math.floor(Math.random() * randomDefaultSearch.length)
+      ]
+    );
+  }, []);
+
+  // Search for movies based on the search input
+  const searchMovieInput = (event) => {
+    event.preventDefault();
+
+    if (searchInput === "") {
+      return;
+    }
+
+    searchMovies(searchInput);
+
+    setSearchInput("");
+  };
+
   return (
-    // Todo: Do not forget to add the .App__darkMode
-    <div className="App">
+    <div className={`App ${darkMode ? "darkMode" : ""}`}>
       {/* HEADER (Title, search input, etc.) */}
-      {/* <Header /> */}
-      <header className="App__header">
-        <h1 className="App__title">Hall of Movies</h1>
-        <div className="App__inputDiv">
-          <input type="text" className="App__searchInput" />
-          <button className="App__searchButton">🔍</button>
-        </div>
-      </header>
+      <Header
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        searchMovieInput={searchMovieInput}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+
       {/* MAIN CONTENT: MOVIE GRID/LIST */}
-      {/* <Main /> */}
-      <div className="App__moviesContainer">
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
+      {movies?.length > 0 ? (
+        <div className="App__moviesContainer">
+          {movies.map((movie) =>
+            // If the poster is not available, then do not show the movie/series
+            movie.Poster !== "N/A" ? (
+              <MovieCard key={movie.imdbID} movie={movie} darkMode={darkMode} />
+            ) : (
+              <></>
+            )
+          )}
         </div>
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
+      ) : (
+        <div className="App__moviesContainer2">
+          <p className="App__notFoundMessage">No movies/series found!😖</p>
+          <p className="App__notFoundMessage2">
+            Try searching this: Spiderman, Superman, Batman.
+          </p>
         </div>
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
-        </div>
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
-        </div>
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
-        </div>
-        <div className="App__movieCard">
-          <img
-            className="App__movieImage"
-            src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
-            alt=""
-          />
-          <div className="App__movieDescription">
-            <h2 className="App__movieName">Movie Name</h2>
-            <p className="App__movieOther">Other description here</p>
-            <p className="App__movieReview">⭐⭐⭐⭐⭐</p>
-          </div>
-        </div>
-      </div>
+      )}
+
       {/* FOOTER (Credits/Guided&Inspired by) */}
-      {/* <Footer /> */}
-      <p className="App__footer">
-        I built this project through the guidance of a React JS full course
-        video (2023) from JavaScript Mastery. Check out the video on this link:
-        {"  "}
-        <a
-          href="https://www.youtube.com/watch?v=b9eMGE7QtTk&t=878s"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Click here!
-        </a>
-      </p>
+      <Footer darkMode={darkMode} />
     </div>
   );
 }
